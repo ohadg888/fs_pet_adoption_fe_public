@@ -30,3 +30,23 @@ a:active {
   text-decoration: none;
   color: inherit;
 }
+
+/*   list   */
+
+.list-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+
+.list-card {
+  width: 16rem;
+  margin: 0 24px 24px 0;
+}
+
+.searchBar-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

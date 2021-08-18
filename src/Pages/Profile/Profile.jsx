@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import AppContext from "../../Context/AppContext";
-import "./style.css";
-import { Container } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
+import ProfileForm from "../../Components/ProfileForm/ProfileForm";
 
-function Home() {
+function Profile() {
   const { setCurrentPage } = useContext(AppContext);
   let location = useLocation();
 
@@ -15,11 +15,16 @@ function Home() {
   return (
     <>
       <Container>
-        <h1>Welcome User</h1>
-        <h3>this project is a project</h3>
+        <Row className="justify-content-md-center">
+          <Col xs={5}>
+            <h1>Profile Profile</h1>
+            <h3>this Profile is a Profile</h3>
+            <ProfileForm />
+          </Col>
+        </Row>
       </Container>
     </>
   );
 }
 
-export default Home;
+export default Profile;
