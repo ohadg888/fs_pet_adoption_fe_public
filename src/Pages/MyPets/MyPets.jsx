@@ -2,17 +2,24 @@ import React, { useState, useEffect, useContext } from "react";
 import AppContext from "../../Context/AppContext";
 import { Container, ButtonGroup, Button, Col, Row } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import Data from "../../Data.json";
 import PetCard from "../../Components/PetCard/PetCard";
 
 function MyPets() {
   const { setCurrentPage } = useContext(AppContext);
   const [savedPets, setSavedPets] = useState(false);
-  const [selectedPets, setSelectedPets] = useState(Data.pets);
+  const [selectedPets, setSelectedPets] = useState([]);
   let location = useLocation();
 
   useEffect(() => {
     setCurrentPage(location.pathname);
+    const fetchData = async () => {
+      const result = await fetch("http://localhost:8000/api/pet", {
+        method: "GET",
+      });
+      const body = await result.json();
+      setSelectedPets(body.result);
+    };
+    fetchData();
     console.log(selectedPets);
   }, []);
 
@@ -26,7 +33,7 @@ function MyPets() {
                 onClick={() => setSavedPets(false)}
                 variant={savedPets ? "secondary" : "warning"}
               >
-                All
+                Mine
               </Button>
               <Button
                 variant={savedPets ? "warning" : "secondary"}

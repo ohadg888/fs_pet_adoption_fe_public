@@ -50,3 +50,40 @@ a:active {
   flex-direction: row;
   align-items: center;
 }
+
+/*     SaveButton        */
+
+.save-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+}
+
+.save-btn {
+  background: transparent;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+  outline: none;
+  color: #999999;
+  float: right;
+}
+
+.saved {
+  color: red;
+  animation: saved 2s infinite;
+}
+
+@keyframes saved {
+  0% {
+    font-size: 25px;
+  }
+  35% {
+    font-size: 35px;
+  }
+  100% {
+    font-size: 25px;
+  }
+}

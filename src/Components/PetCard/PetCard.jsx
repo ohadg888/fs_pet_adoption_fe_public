@@ -3,9 +3,11 @@ import AppContext from "../../Context/AppContext";
 import { Card, Button, Badge } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import dogpic from "../../Assets/dogpic.jfif";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 function PetCard(props) {
-  const { petInfo, petID } = props;
+  const { petInfo, petID, saved, setSaved } = props;
   const [statusColor, setStatusColor] = useState("success");
 
   useEffect(() => {
@@ -16,18 +18,28 @@ function PetCard(props) {
     }
   }, []);
 
+  const handleLike = (e) => {
+    saved ? setSaved(false) : setSaved(true);
+  };
+
   return (
     <>
       <Card className="list-card" id={petID}>
-        <Card.Img variant="top" src={dogpic} />
+        <Card.Img
+          variant="top"
+          style={{ height: "190px" }}
+          src={`http://localhost:8000/${petInfo.picture}`}
+        />
         <Card.Body>
           <Card.Title>
             {petInfo.name} <Badge bg={statusColor}>{petInfo.status}</Badge>
+            <FontAwesomeIcon
+              icon={faStar}
+              className={`save-btn ${saved ? "saved" : ""}`}
+              onClick={handleLike}
+            />
           </Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
+          <Card.Text>{petInfo.bio}</Card.Text>
           <Button variant="primary">See More</Button>
         </Card.Body>
       </Card>

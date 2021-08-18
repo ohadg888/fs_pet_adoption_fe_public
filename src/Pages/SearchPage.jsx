@@ -3,15 +3,22 @@ import AppContext from "../Context/AppContext";
 import { useLocation } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import SearchBar from "../Components/SearchBar";
-import Data from "../Data.json";
 import PetCard from "../Components/PetCard/PetCard";
 
 function SearchPage() {
-  const [selectedPets, setSelectedPets] = useState(Data.pets);
+  const [selectedPets, setSelectedPets] = useState([]);
   const { setCurrentPage } = useContext(AppContext);
   let location = useLocation();
 
   useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetch("http://localhost:8000/api/pet", {
+        method: "GET",
+      });
+      const body = await result.json();
+      setSelectedPets(body.result);
+    };
+    fetchData();
     setCurrentPage(location.pathname);
   }, []);
 
