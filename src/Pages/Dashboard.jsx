@@ -36,7 +36,6 @@ function Dashboard() {
         }
       );
       const body = await result.json();
-      console.log(body.result);
       setPetsList(body.result);
     };
 
@@ -58,12 +57,9 @@ function Dashboard() {
     setCurrentPage(location.pathname);
   }, []);
 
-  useEffect(() => {
-    console.log(userModalInfo);
-  }, [userModalInfo]);
+  useEffect(() => {}, [userModalInfo]);
 
   const handleOnClick = (e) => {
-    console.log(e.target.parentElement.id);
     setUserModalInfo({
       user: usersList.filter(
         (user) => user._id == e.target.parentElement.id
@@ -143,7 +139,6 @@ function Dashboard() {
                       id={pet._id}
                       key={index}
                       onClick={() => {
-                        console.log(333);
                         history.push(`/PetPage/${pet._id}`);
                       }}
                     >

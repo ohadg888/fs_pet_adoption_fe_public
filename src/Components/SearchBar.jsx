@@ -35,12 +35,6 @@ function SearchBar(props) {
     });
   }, [searchQuery]);
 
-  useEffect(() => {
-    // setPetWeights()
-    console.log(234);
-    console.log(searchResults);
-  }, [searchResults]);
-
   const handleOnChange = (e) => {
     setSearchQuery((prevState) => {
       const copy = { ...prevState };

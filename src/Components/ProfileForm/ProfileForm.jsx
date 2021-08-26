@@ -5,10 +5,8 @@ import AppContext from "../../Context/AppContext";
 function ProfileForm() {
   const { userToken, userInfo } = useContext(AppContext);
   const [formData, setFormData] = useState({});
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+  const [errorDisplay, setErrorDisplay] = useState(false);
+  const [error, setError] = useState("");
 
   const handleOnChange = (e) => {
     setFormData((prevState) => {
@@ -18,8 +16,11 @@ function ProfileForm() {
     });
   };
 
+  useEffect(() => {
+    error ? setErrorDisplay(true) : setErrorDisplay(false);
+  }, [error]);
+
   const handleSubmit = async () => {
-    console.log(JSON.stringify({ dataToUpdate: formData }));
     try {
       const result = await fetch(
         `https://pet-project-itc.herokuapp.com/api/user/${userInfo._id}`,
@@ -33,9 +34,8 @@ function ProfileForm() {
         }
       );
       const body = await result.json();
-      console.log(body.result);
     } catch (error) {
-      console.log(error);
+      setError(error);
     }
   };
 
@@ -132,6 +132,9 @@ function ProfileForm() {
             Update
           </Button>
         </Col>
+      </Row>
+      <Row className="float-end">
+        <Col>{errorDisplay && <Alert variant={danger}>{error}</Alert>}</Col>
       </Row>
     </>
   );

@@ -27,17 +27,21 @@ function App() {
     if (userToken) {
       localStorage.setItem("userToken", userToken);
       const fetchData = async () => {
-        const result = await fetch(
-          `https://pet-project-itc.herokuapp.com/api/user/info`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        );
-        const body = await result.json();
-        setUserInfo(body.result);
+        try {
+          const result = await fetch(
+            `https://pet-project-itc.herokuapp.com/api/user/info`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+              },
+            }
+          );
+          const body = await result.json();
+          setUserInfo(body.result);
+        } catch (error) {
+          console.log(error);
+        }
       };
       fetchData();
     } else {

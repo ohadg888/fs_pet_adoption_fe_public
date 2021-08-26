@@ -63,7 +63,6 @@ function PetPage() {
   };
 
   const handleReturn = async () => {
-    console.log(petInfo._id);
     const result = await fetch(
       `https://pet-project-itc.herokuapp.com/api/pet/${petInfo._id}/return`,
       {
@@ -75,7 +74,6 @@ function PetPage() {
       }
     );
     const body = await result.json();
-    console.log(body);
     petStatus ? setPetStatus(false) : setPetStatus(true);
   };
 

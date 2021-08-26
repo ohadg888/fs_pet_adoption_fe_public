@@ -17,10 +17,6 @@ function AddPetForm(props) {
   const { update, petInfo } = props;
   const [formData, setFormData] = useState({});
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   const handleOnChange = (e) => {
     if (e.target.name !== "petPic") {
       setFormData((prevState) => {
