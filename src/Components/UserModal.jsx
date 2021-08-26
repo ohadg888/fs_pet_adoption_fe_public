@@ -1,19 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import AppContext from "../Context/AppContext";
-import {
-  Container,
-  Row,
-  Modal,
-  Table,
-  Badge,
-  Card,
-  Col,
-  Form,
-  Button,
-  FloatingLabel,
-} from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTasks } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
+import { Row, Modal, Table, Badge, Card, Col } from "react-bootstrap";
 
 function UserModal(props) {
   const { show, onHide, userModalInfo } = props;

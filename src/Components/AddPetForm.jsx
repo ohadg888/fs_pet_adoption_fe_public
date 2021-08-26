@@ -1,16 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  FloatingLabel,
-} from "react-bootstrap";
+import React, { useContext, useState } from "react";
+import { Row, Col, Form, Button, FloatingLabel } from "react-bootstrap";
 import AppContext from "../Context/AppContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 function AddPetForm(props) {
   const { userToken } = useContext(AppContext);

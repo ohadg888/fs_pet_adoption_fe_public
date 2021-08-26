@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import AppContext from "../Context/AppContext";
-import { Prev } from "react-bootstrap/esm/PageItem";
 
 function SaveButton(props) {
   const { petID } = props;

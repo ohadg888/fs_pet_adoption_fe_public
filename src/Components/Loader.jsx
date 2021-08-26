@@ -1,7 +1,7 @@
 import React from "react";
 import { Spinner } from "react-bootstrap";
 
-function Loader(params) {
+function Loader() {
   return (
     <div className="loader-wrap">
       <Spinner animation="grow" variant="primary" />

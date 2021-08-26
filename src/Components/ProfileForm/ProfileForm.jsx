@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Form, Row, Col, FloatingLabel, Button } from "react-bootstrap";
+import { Form, Row, Col, Alert, FloatingLabel, Button } from "react-bootstrap";
 import AppContext from "../../Context/AppContext";
 
 function ProfileForm() {
@@ -134,7 +134,7 @@ function ProfileForm() {
         </Col>
       </Row>
       <Row className="float-end">
-        <Col>{errorDisplay && <Alert variant={danger}>{error}</Alert>}</Col>
+        <Col>{errorDisplay && <Alert variant="danger">{error}</Alert>}</Col>
       </Row>
     </>
   );

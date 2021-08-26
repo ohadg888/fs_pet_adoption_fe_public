@@ -1,6 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import React, { useContext, useState } from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import AppContext from "../../Context/AppContext";
 

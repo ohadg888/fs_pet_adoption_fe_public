@@ -1,13 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import AppContext from "../Context/AppContext";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  FloatingLabel,
-} from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import AddPetForm from "../Components/AddPetForm";
 

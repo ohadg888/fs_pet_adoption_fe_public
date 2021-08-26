@@ -7,14 +7,13 @@ import {
   Row,
   Col,
   useAccordionButton,
-  FloatingLabel,
   Button,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTasks } from "@fortawesome/free-solid-svg-icons";
 
 function SearchBar(props) {
-  const { setSearchResults, searchResults } = props;
+  const { setSearchResults } = props;
   const { petsList } = useContext(AppContext);
   const [searchQuery, setSearchQuery] = useState({
     name: "",

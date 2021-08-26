@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./style.css";
-import { Link } from "react-router-dom";
 import AppContext from "../../Context/AppContext";
 import profileIcon from "../../Assets/profileIcon.png";
 import favicon from "../../Assets/favicon.ico";
@@ -11,15 +10,7 @@ import {
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import AuthModal from "../AuthModal/AuthModal";
-import {
-  Nav,
-  Container,
-  NavDropdown,
-  FormControl,
-  Button,
-  Form,
-  Navbar,
-} from "react-bootstrap";
+import { Nav, Container, Navbar } from "react-bootstrap";
 
 function TopNavbar() {
   const { userToken, userInfo, setUserToken, setUserInfo } =

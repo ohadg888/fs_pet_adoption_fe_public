@@ -1,21 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import AppContext from "../Context/AppContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../Components/Loader";
-import {
-  Container,
-  Row,
-  Modal,
-  Table,
-  Col,
-  Form,
-  Button,
-  FloatingLabel,
-} from "react-bootstrap";
+import { Container, Row, Table, Button } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import AddPetForm from "../Components/AddPetForm";
 import UserModal from "../Components/UserModal";
 
 function Dashboard() {

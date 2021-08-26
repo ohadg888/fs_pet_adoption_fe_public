@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import AppContext from "../../Context/AppContext";
 import "./style.css";
 import { Container, Row } from "react-bootstrap";
