@@ -5,22 +5,32 @@ import { useLocation } from "react-router-dom";
 import PetCard from "../../Components/PetCard/PetCard";
 
 function MyPets() {
-  const { setCurrentPage } = useContext(AppContext);
-  const [savedPets, setSavedPets] = useState(false);
-  const [selectedPets, setSelectedPets] = useState([]);
+  const { setCurrentPage, userInfo, petsList, setPetsList } =
+    useContext(AppContext);
+  const [showSavedPets, setShowSavedPets] = useState(false);
+
   let location = useLocation();
 
   useEffect(() => {
-    setCurrentPage(location.pathname);
     const fetchData = async () => {
-      const result = await fetch("http://localhost:8000/api/pet", {
-        method: "GET",
-      });
+      const result = await fetch(
+        `http://localhost:8000/api/pet/user/${userInfo._id}`,
+        {
+          method: "GET",
+        }
+      );
       const body = await result.json();
-      setSelectedPets(body.result);
+      showSavedPets
+        ? setPetsList(body.result.savedPets)
+        : setPetsList(body.result.myPets);
     };
-    fetchData();
-    console.log(selectedPets);
+    if (userInfo) {
+      fetchData();
+    }
+  }, [showSavedPets, userInfo]);
+
+  useEffect(() => {
+    setCurrentPage(location.pathname);
   }, []);
 
   return (
@@ -30,14 +40,14 @@ function MyPets() {
           <Col xs={8}>
             <ButtonGroup aria-label="Basic example">
               <Button
-                onClick={() => setSavedPets(false)}
-                variant={savedPets ? "secondary" : "warning"}
+                onClick={() => setShowSavedPets(false)}
+                variant={showSavedPets ? "secondary" : "warning"}
               >
                 Mine
               </Button>
               <Button
-                variant={savedPets ? "warning" : "secondary"}
-                onClick={() => setSavedPets(true)}
+                variant={showSavedPets ? "warning" : "secondary"}
+                onClick={() => setShowSavedPets(true)}
               >
                 Saved
               </Button>
@@ -51,11 +61,25 @@ function MyPets() {
           </Col>
         </Row>
         <Row className="justify-content-md-center">
-          <Col xs={8} style={{ "flex-wrap": "wrap" }}>
+          <Col xs={8} style={{ "flexWrap": "wrap" }}>
             <div className="list-wrap">
-              {Object.keys(selectedPets).map((key) => {
-                return <PetCard petInfo={selectedPets[key]} petID={key} />;
-              })}
+              {showSavedPets
+                ? Object.keys(petsList).map((key) => {
+                    return (
+                      <PetCard
+                        key={petsList[key]._id}
+                        petInfo={petsList[key]}
+                      />
+                    );
+                  })
+                : Object.keys(petsList).map((key) => {
+                    return (
+                      <PetCard
+                        key={petsList[key]._id}
+                        petInfo={petsList[key]}
+                      />
+                    );
+                  })}
             </div>
           </Col>
         </Row>

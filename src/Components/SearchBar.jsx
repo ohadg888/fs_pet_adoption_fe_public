@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import AppContext from "../Context/AppContext";
 import {
   Form,
   Accordion,
@@ -12,16 +13,43 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTasks } from "@fortawesome/free-solid-svg-icons";
 
-function SearchBar() {
-  const [formData, setFormData] = useState({});
-  const [searchQuery, setSearchQuery] = useState("");
+function SearchBar(props) {
+  const { setSearchResults, searchResults } = props;
+  const { petsList } = useContext(AppContext);
+  const [searchQuery, setSearchQuery] = useState({
+    name: "",
+    type: "",
+    status: "",
+  });
   const [advancedSearchToggle, setAdvancedSearchToggle] = useState(false);
 
+  useEffect(() => {
+    setSearchResults(() => {
+      const copy = [...petsList];
+      return copy.filter(
+        (pet) =>
+          pet.name.includes(searchQuery.name) &&
+          pet.type.includes(searchQuery.type) &&
+          pet.status.includes(searchQuery.status)
+      );
+    });
+  }, [searchQuery]);
+
+  useEffect(() => {
+    // setPetWeights()
+    console.log(234);
+    console.log(searchResults);
+  }, [searchResults]);
+
   const handleOnChange = (e) => {
-    setSearchQuery(e.target.value);
+    setSearchQuery((prevState) => {
+      const copy = { ...prevState };
+      copy[e.target.id] = e.target.value;
+      return copy;
+    });
   };
 
-  const handleOnClick = (e) => {};
+  const handleOnClick = async (e) => {};
 
   const CustomToggle = ({ children, eventKey }) => {
     const decoratedOnClick = useAccordionButton(eventKey, () =>
@@ -46,21 +74,47 @@ function SearchBar() {
       <Accordion>
         <Card>
           <Card.Header className="searchBar-wrap">
-            <Form.Control
-              type="text"
+            <Form.Select
+              aria-label="Default select example"
+              className="search-main-select"
               onChange={handleOnChange}
-              placeholder="Search Pets"
-              className="me-3"
-            />
-            <Button variant="primary" onClick={handleOnClick} className="me-3">
-              Search
-            </Button>{" "}
+              id="type"
+            >
+              <option value="">Search by Type</option>
+              <option value="Dog">Dog</option>
+              <option value="Cat">Cat</option>
+            </Form.Select>{" "}
             <CustomToggle eventKey="0">
               <FontAwesomeIcon icon={faTasks} />
             </CustomToggle>
           </Card.Header>
           <Accordion.Collapse eventKey="0">
-            <Card.Body>Hello! I'm the body</Card.Body>
+            <Card.Body>
+              <Row className="mb-3">
+                <Col>
+                  <Form.Control
+                    type="text"
+                    id="name"
+                    onChange={handleOnChange}
+                    placeholder="Search by Name"
+                    className="me-3"
+                  />
+                </Col>
+                <Col>
+                  <Form.Select
+                    aria-label="Default select example"
+                    className="search-select"
+                    id="status"
+                    onChange={handleOnChange}
+                  >
+                    <option value="">Status</option>
+                    <option value="available">Available</option>
+                    <option value="foster">Foster</option>
+                    <option value="adopted">Adopted</option>
+                  </Form.Select>
+                </Col>
+              </Row>
+            </Card.Body>
           </Accordion.Collapse>
         </Card>
       </Accordion>

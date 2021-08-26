@@ -12,8 +12,9 @@ import AppContext from "../Context/AppContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
-function AddPetForm() {
+function AddPetForm(props) {
   const { userToken } = useContext(AppContext);
+  const { update, petInfo } = props;
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
@@ -37,21 +38,36 @@ function AddPetForm() {
   };
 
   const handleSubmit = async () => {
-    const newFormData = new FormData();
-
-    for (let key in formData) {
-      newFormData.append(key, formData[key]);
+    if (update) {
+      const newFormData = new FormData();
+      for (let key in formData) {
+        newFormData.append(key, formData[key]);
+      }
+      const result = await fetch(
+        `http://localhost:8000/api/pet/${petInfo._id}`,
+        {
+          method: "PUT",
+          body: newFormData,
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+      const body = await result.json();
+    } else {
+      const newFormData = new FormData();
+      for (let key in formData) {
+        newFormData.append(key, formData[key]);
+      }
+      const result = await fetch("http://localhost:8000/api/pet", {
+        method: "POST",
+        body: newFormData,
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      const body = await result.json();
     }
-
-    const result = await fetch("http://localhost:8000/api/pet", {
-      method: "POST",
-      body: newFormData,
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    });
-    const body = await result.json();
-    console.log(body);
   };
 
   return (
@@ -65,8 +81,18 @@ function AddPetForm() {
             aria-label="Pet Type"
           >
             <option>Pet Type</option>
-            <option value="Dog">Dog</option>
-            <option value="Cat">Cat</option>
+            <option
+              selected={update && petInfo.type === "Dog" && "selected"}
+              value="Dog"
+            >
+              Dog
+            </option>
+            <option
+              selected={update && petInfo.type === "Cat" && "selected"}
+              value="Cat"
+            >
+              Cat
+            </option>
           </Form.Select>
         </Col>
       </Row>
@@ -76,6 +102,7 @@ function AddPetForm() {
             <Form.Control
               name="name"
               type="text"
+              defaultValue={update && petInfo.name}
               placeholder="Name"
               onChange={handleOnChange}
             />
@@ -110,6 +137,7 @@ function AddPetForm() {
           <Form.Floating className="mb-3">
             <Form.Control
               name="height"
+              defaultValue={update && petInfo.height}
               type="number"
               placeholder="Height"
               onChange={handleOnChange}
@@ -121,6 +149,7 @@ function AddPetForm() {
           <Form.Floating className="mb-3">
             <Form.Control
               name="weight"
+              defaultValue={update && petInfo.weight}
               type="number"
               placeholder="Weight"
               onChange={handleOnChange}
@@ -137,6 +166,7 @@ function AddPetForm() {
               onChange={handleOnChange}
               inline
               label="Yes"
+              checked={update && petInfo.hypoallergenic == "true"}
               value={true}
               name="hypoallergenic"
               type="radio"
@@ -146,6 +176,7 @@ function AddPetForm() {
               onChange={handleOnChange}
               inline
               label="No"
+              checked={update && petInfo.hypoallergenic == "false"}
               value={false}
               name="hypoallergenic"
               type="radio"
@@ -160,6 +191,7 @@ function AddPetForm() {
             <Form.Control
               name="color"
               type="text"
+              defaultValue={update && petInfo.color}
               placeholder="Color"
               onChange={handleOnChange}
             />
@@ -170,6 +202,7 @@ function AddPetForm() {
           <Form.Floating className="mb-3">
             <Form.Control
               name="breed"
+              defaultValue={update && petInfo.breed}
               type="text"
               placeholder="breed"
               onChange={handleOnChange}
@@ -184,7 +217,8 @@ function AddPetForm() {
             <Form.Control
               as="textarea"
               name="diet"
-              placeholder="Bio"
+              defaultValue={update && petInfo.diet}
+              placeholder="Diet Restrictions"
               style={{ height: "100px" }}
               onChange={handleOnChange}
             />
@@ -197,6 +231,7 @@ function AddPetForm() {
             <Form.Control
               as="textarea"
               name="bio"
+              defaultValue={update && petInfo.bio}
               placeholder="Bio"
               style={{ height: "100px" }}
               onChange={handleOnChange}
@@ -207,7 +242,7 @@ function AddPetForm() {
       <Row className="float-end mb-3">
         <Col>
           <Button onClick={handleSubmit} type="submit">
-            Add Pet
+            {update ? "Update Pet" : "Add Pet"}
           </Button>
         </Col>
       </Row>

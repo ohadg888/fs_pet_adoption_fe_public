@@ -6,18 +6,10 @@ import AppContext from "../../Context/AppContext";
 
 function AuthModal(props) {
   const { showModal, setShowModal } = props;
-  const { setUserToken, setUserID } = useContext(AppContext);
+  const { setUserToken } = useContext(AppContext);
   const [isLogin, setIsLogin] = useState(true);
   const [loginFormData, setLoginFormData] = useState({});
   const [signupFormData, setSignupFormData] = useState({});
-
-  useEffect(() => {
-    console.log(signupFormData);
-  }, [signupFormData]);
-
-  useEffect(() => {
-    console.log(loginFormData);
-  }, [loginFormData]);
 
   const handleSubmit = async () => {
     let result, body;
@@ -31,7 +23,6 @@ function AuthModal(props) {
         body = await result.json();
         if (body.loggedIn) {
           setUserToken(body.accessToken);
-          setUserID(body.userID);
           setShowModal(false);
         }
       } else {

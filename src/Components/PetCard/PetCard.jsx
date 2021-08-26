@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import AppContext from "../../Context/AppContext";
 import { Card, Button, Badge } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
-import dogpic from "../../Assets/dogpic.jfif";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import SaveButton from "../SaveButton";
+import { Link, useParams } from "react-router-dom";
 
 function PetCard(props) {
-  const { petInfo, petID, saved, setSaved } = props;
+  const { userInfo, setPetPageInfo } = useContext(AppContext);
+  const { petInfo } = props;
   const [statusColor, setStatusColor] = useState("success");
 
   useEffect(() => {
@@ -18,13 +17,9 @@ function PetCard(props) {
     }
   }, []);
 
-  const handleLike = (e) => {
-    saved ? setSaved(false) : setSaved(true);
-  };
-
   return (
     <>
-      <Card className="list-card" id={petID}>
+      <Card className="list-card">
         <Card.Img
           variant="top"
           style={{ height: "190px" }}
@@ -33,14 +28,12 @@ function PetCard(props) {
         <Card.Body>
           <Card.Title>
             {petInfo.name} <Badge bg={statusColor}>{petInfo.status}</Badge>
-            <FontAwesomeIcon
-              icon={faStar}
-              className={`save-btn ${saved ? "saved" : ""}`}
-              onClick={handleLike}
-            />
+            <SaveButton petID={petInfo._id} />
           </Card.Title>
           <Card.Text>{petInfo.bio}</Card.Text>
-          <Button variant="primary">See More</Button>
+          <Link to={`/PetPage/${petInfo._id}`}>
+            <Button variant="primary">See More</Button>
+          </Link>
         </Card.Body>
       </Card>
     </>

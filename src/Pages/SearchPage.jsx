@@ -4,10 +4,11 @@ import { useLocation } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import SearchBar from "../Components/SearchBar";
 import PetCard from "../Components/PetCard/PetCard";
+import Loader from "../Components/Loader";
 
 function SearchPage() {
-  const [selectedPets, setSelectedPets] = useState([]);
-  const { setCurrentPage } = useContext(AppContext);
+  const { setCurrentPage, petsList, setPetsList } = useContext(AppContext);
+  const [searchResults, setSearchResults] = useState(null);
   let location = useLocation();
 
   useEffect(() => {
@@ -16,11 +17,15 @@ function SearchPage() {
         method: "GET",
       });
       const body = await result.json();
-      setSelectedPets(body.result);
+      setPetsList(body.result);
     };
     fetchData();
     setCurrentPage(location.pathname);
   }, []);
+
+  useEffect(() => {
+    petsList && setSearchResults(petsList);
+  }, [petsList]);
 
   return (
     <>
@@ -28,16 +33,25 @@ function SearchPage() {
         <Row className="justify-content-md-center mb-3">
           <Col xs={7}>
             <h1>Search Page</h1>
-            <h3>this Search is a Search</h3>
-            <SearchBar />
+            <h4>Find any pet</h4>
+            <SearchBar setSearchResults={setSearchResults} />
           </Col>
         </Row>
         <Row className="justify-content-md-center mb-3">
-          <Col xs={8} style={{ "flex-wrap": "wrap" }}>
+          <Col xs={8} style={{ "flexWrap": "wrap" }}>
             <div className="list-wrap">
-              {Object.keys(selectedPets).map((key) => {
-                return <PetCard petInfo={selectedPets[key]} petID={key} />;
-              })}
+              {searchResults ? (
+                Object.keys(searchResults).map((key) => {
+                  return (
+                    <PetCard
+                      petInfo={searchResults[key]}
+                      key={searchResults[key]._id}
+                    />
+                  );
+                })
+              ) : (
+                <Loader />
+              )}
             </div>
           </Col>
         </Row>

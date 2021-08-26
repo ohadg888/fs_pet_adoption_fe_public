@@ -26,7 +26,7 @@ function AddPet() {
           <Col xs={5}>
             <h1>Add Pet</h1>
             <h3>this Pet is a Pet</h3>
-            <AddPetForm />
+            <AddPetForm update={false} />
           </Col>
         </Row>
       </Container>

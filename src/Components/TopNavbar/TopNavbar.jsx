@@ -3,6 +3,7 @@ import "./style.css";
 import { Link } from "react-router-dom";
 import AppContext from "../../Context/AppContext";
 import profileIcon from "../../Assets/profileIcon.png";
+import favicon from "../../Assets/favicon.ico";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSignInAlt,
@@ -21,20 +22,22 @@ import {
 } from "react-bootstrap";
 
 function TopNavbar() {
-  const { currentPage, userToken, setUserToken, setUserID } =
+  const { userToken, userInfo, setUserToken, setUserInfo } =
     useContext(AppContext);
   const [profilePic, setProfilePic] = useState(profileIcon);
   const [showModal, setShowModal] = useState(false);
 
   const handleSignout = () => {
     setUserToken(null);
-    setUserID(null);
+    setUserInfo(null);
   };
   return (
     <>
       <Navbar bg="light" expand="lg" className="mb-5">
         <Container>
-          <Navbar.Brand href="#">Adopet</Navbar.Brand>
+          <Navbar.Brand href="#">
+            <img src={favicon} className="top-icon" /> Adopet
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -51,7 +54,7 @@ function TopNavbar() {
               ) : (
                 <>
                   <Nav.Link disabled href="/Profile">
-                    Profile
+                    My Profile
                   </Nav.Link>
                   <Nav.Link disabled href="/MyPets">
                     My Pets
@@ -60,6 +63,9 @@ function TopNavbar() {
               )}
             </Nav>
           </Navbar.Collapse>
+          {userInfo && userInfo.role === "admin" && (
+            <Nav.Link href="/Dashboard">Dashboard</Nav.Link>
+          )}
           {userToken && (
             <Nav.Link href="/SearchPage">
               <FontAwesomeIcon icon={faSearch} />

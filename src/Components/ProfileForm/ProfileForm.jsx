@@ -3,33 +3,12 @@ import { Form, Row, Col, FloatingLabel, Button } from "react-bootstrap";
 import AppContext from "../../Context/AppContext";
 
 function ProfileForm() {
-  const { userToken, userID } = useContext(AppContext);
+  const { userToken, userInfo } = useContext(AppContext);
   const [formData, setFormData] = useState({});
-  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     console.log(formData);
   }, [formData]);
-
-  useEffect(() => {
-    console.log(userToken);
-    const fetchData = async () => {
-      try {
-        const result = await fetch(
-          `http://localhost:8000/api/user/${userID}/full`,
-          {
-            method: "GET",
-          }
-        );
-        const body = await result.json();
-        setUserInfo(body.result);
-        console.log(body.result);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
 
   const handleOnChange = (e) => {
     setFormData((prevState) => {
@@ -42,14 +21,17 @@ function ProfileForm() {
   const handleSubmit = async () => {
     console.log(JSON.stringify({ dataToUpdate: formData }));
     try {
-      const result = await fetch(`http://localhost:8000/api/user/${userID}`, {
-        method: "PUT",
-        body: JSON.stringify({ dataToUpdate: formData }),
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const result = await fetch(
+        `http://localhost:8000/api/user/${userInfo._id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({ dataToUpdate: formData }),
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const body = await result.json();
       console.log(body.result);
     } catch (error) {
@@ -67,7 +49,7 @@ function ProfileForm() {
               type="email"
               placeholder="name@example.com"
               onChange={handleOnChange}
-              defaultValue={userInfo.email}
+              defaultValue={userInfo && userInfo.email}
             />
             <label htmlFor="email">Email address</label>
           </Form.Floating>
@@ -96,7 +78,7 @@ function ProfileForm() {
               type="text"
               placeholder="First Name"
               onChange={handleOnChange}
-              defaultValue={userInfo.firstName}
+              defaultValue={userInfo && userInfo.firstName}
             />
             <label htmlFor="firstName">First Name</label>
           </Form.Floating>
@@ -109,7 +91,7 @@ function ProfileForm() {
               type="text"
               placeholder="Last Name"
               onChange={handleOnChange}
-              defaultValue={userInfo.lastName}
+              defaultValue={userInfo && userInfo.lastName}
             />
             <label htmlFor="lastName">Last Name</label>
           </Form.Floating>
@@ -124,7 +106,7 @@ function ProfileForm() {
               type="text"
               placeholder="Phone Number"
               onChange={handleOnChange}
-              defaultValue={userInfo.phoneNumber}
+              defaultValue={userInfo && userInfo.phoneNumber}
             />
             <label htmlFor="phone">Phone Number</label>
           </Form.Floating>
@@ -139,7 +121,7 @@ function ProfileForm() {
               placeholder="Short Bio"
               style={{ height: "100px" }}
               onChange={handleOnChange}
-              defaultValue={userInfo.bio}
+              defaultValue={userInfo && userInfo.bio}
             />
           </FloatingLabel>
         </Col>

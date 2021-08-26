@@ -1,8 +1,24 @@
 /*  Home  */
 
-.Home {
-  padding: 32px;
-  text-align: center;
-  margin: auto;
-  max-width: 1000px;
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.home {
+  z-index: 1;
+}
+
+.dog-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 59px;
+  background: #ffe16e;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

@@ -17,8 +17,8 @@ function Profile() {
       <Container>
         <Row className="justify-content-md-center">
           <Col xs={5}>
-            <h1>Profile Profile</h1>
-            <h3>this Profile is a Profile</h3>
+            <h1>My Profile</h1>
+            <h4 className="mb-4">Update your Profile</h4>
             <ProfileForm />
           </Col>
         </Row>

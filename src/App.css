@@ -64,7 +64,7 @@ a:active {
 .save-btn {
   background: transparent;
   border: none;
-  font-size: 25px;
+  font-size: 20px;
   cursor: pointer;
   outline: none;
   color: #999999;
@@ -72,18 +72,39 @@ a:active {
 }
 
 .saved {
-  color: red;
+  color: #ffc107;
   animation: saved 2s infinite;
 }
 
 @keyframes saved {
   0% {
-    font-size: 25px;
+    font-size: 20px;
   }
   35% {
-    font-size: 35px;
-  }
-  100% {
     font-size: 25px;
   }
+  100% {
+    font-size: 20px;
+  }
+}
+
+/*   search-select   */
+/* .search-select {
+  max-width: 150px;
+} */
+.search-main-select {
+  margin-right: 1rem;
+}
+
+/*     Table      */
+.table-row {
+  cursor: pointer;
+}
+
+/*    Loader     */
+.loader-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  width: 100%;
 }

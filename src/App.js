@@ -10,7 +10,8 @@ import {
 import Home from "./Pages/Home/Home";
 import Profile from "./Pages/Profile/Profile";
 import MyPets from "./Pages/MyPets/MyPets";
-import PetPage from "./Pages/PetPage/PetPage";
+import Dashboard from "./Pages/Dashboard";
+import PetPage from "./Pages/PetPage";
 import AddPet from "./Pages/AddPet";
 import SearchPage from "./Pages/SearchPage";
 import Navbar from "./Components/TopNavbar/TopNavbar";
@@ -19,19 +20,27 @@ import AppContext from "./Context/AppContext";
 function App() {
   const [currentPage, setCurrentPage] = useState("/");
   const [userToken, setUserToken] = useState(localStorage.getItem("userToken"));
-  const [userID, setUserID] = useState(localStorage.getItem("userID"));
+  const [userInfo, setUserInfo] = useState(null);
+  const [petsList, setPetsList] = useState([]);
 
   useEffect(() => {
-    userToken
-      ? localStorage.setItem("userToken", userToken)
-      : localStorage.removeItem("userToken");
+    if (userToken) {
+      localStorage.setItem("userToken", userToken);
+      const fetchData = async () => {
+        const result = await fetch(`http://localhost:8000/api/user/info`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        });
+        const body = await result.json();
+        setUserInfo(body.result);
+      };
+      fetchData();
+    } else {
+      localStorage.removeItem("userToken");
+    }
   }, [userToken]);
-
-  useEffect(() => {
-    userID
-      ? localStorage.setItem("userID", userID)
-      : localStorage.removeItem("userID");
-  }, [userID]);
 
   return (
     <>
@@ -41,8 +50,10 @@ function App() {
           setCurrentPage: setCurrentPage,
           setUserToken: setUserToken,
           userToken: userToken,
-          userID: userID,
-          setUserID: setUserID,
+          userInfo: userInfo,
+          setUserInfo: setUserInfo,
+          petsList: petsList,
+          setPetsList: setPetsList,
         }}
       >
         <Router>
@@ -66,6 +77,12 @@ function App() {
             </Route>
             <Route exact path="/AddPet">
               <AddPet />
+            </Route>
+            <Route path="/PetPage/:id">
+              <PetPage />
+            </Route>
+            <Route exact path="/Dashboard">
+              <Dashboard />
             </Route>
             <Route path="/">
               <Home />
