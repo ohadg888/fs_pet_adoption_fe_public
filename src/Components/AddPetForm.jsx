@@ -44,7 +44,7 @@ function AddPetForm(props) {
         newFormData.append(key, formData[key]);
       }
       const result = await fetch(
-        `http://localhost:8000/api/pet/${petInfo._id}`,
+        `https://pet-project-itc.herokuapp.com/api/pet/${petInfo._id}`,
         {
           method: "PUT",
           body: newFormData,
@@ -59,13 +59,16 @@ function AddPetForm(props) {
       for (let key in formData) {
         newFormData.append(key, formData[key]);
       }
-      const result = await fetch("http://localhost:8000/api/pet", {
-        method: "POST",
-        body: newFormData,
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
+      const result = await fetch(
+        "https://pet-project-itc.herokuapp.com/api/pet",
+        {
+          method: "POST",
+          body: newFormData,
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
       const body = await result.json();
     }
   };

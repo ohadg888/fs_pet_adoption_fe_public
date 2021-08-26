@@ -27,12 +27,15 @@ function App() {
     if (userToken) {
       localStorage.setItem("userToken", userToken);
       const fetchData = async () => {
-        const result = await fetch(`http://localhost:8000/api/user/info`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        });
+        const result = await fetch(
+          `https://pet-project-itc.herokuapp.com/api/user/info`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
+        );
         const body = await result.json();
         setUserInfo(body.result);
       };

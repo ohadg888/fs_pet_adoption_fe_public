@@ -23,7 +23,7 @@ function PetCard(props) {
         <Card.Img
           variant="top"
           style={{ height: "190px" }}
-          src={`http://localhost:8000/${petInfo.picture}`}
+          src={`https://pet-project-itc.herokuapp.com/${petInfo.picture}`}
         />
         <Card.Body>
           <Card.Title>

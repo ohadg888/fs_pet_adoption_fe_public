@@ -22,7 +22,7 @@ function ProfileForm() {
     console.log(JSON.stringify({ dataToUpdate: formData }));
     try {
       const result = await fetch(
-        `http://localhost:8000/api/user/${userInfo._id}`,
+        `https://pet-project-itc.herokuapp.com/api/user/${userInfo._id}`,
         {
           method: "PUT",
           body: JSON.stringify({ dataToUpdate: formData }),
@@ -101,8 +101,8 @@ function ProfileForm() {
         <Col>
           <Form.Floating className="mb-3">
             <Form.Control
-              id="phone"
-              name="phone"
+              id="phoneNumber"
+              name="phoneNumber"
               type="text"
               placeholder="Phone Number"
               onChange={handleOnChange}

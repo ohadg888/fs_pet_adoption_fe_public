@@ -24,9 +24,12 @@ function PetPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch(`http://localhost:8000/api/pet/${id}`, {
-        method: "GET",
-      });
+      const result = await fetch(
+        `https://pet-project-itc.herokuapp.com/api/pet/${id}`,
+        {
+          method: "GET",
+        }
+      );
       const body = await result.json();
       setPetInfo(body.result);
     };
@@ -45,7 +48,7 @@ function PetPage() {
 
   const handleAdopt = async (type) => {
     const result = await fetch(
-      `http://localhost:8000/api/pet/${petInfo._id}/adopt`,
+      `https://pet-project-itc.herokuapp.com/api/pet/${petInfo._id}/adopt`,
       {
         method: "POST",
         body: JSON.stringify({ type: type }),
@@ -62,7 +65,7 @@ function PetPage() {
   const handleReturn = async () => {
     console.log(petInfo._id);
     const result = await fetch(
-      `http://localhost:8000/api/pet/${petInfo._id}/return`,
+      `https://pet-project-itc.herokuapp.com/api/pet/${petInfo._id}/return`,
       {
         method: "POST",
         headers: {
@@ -82,7 +85,9 @@ function PetPage() {
         <Row className="justify-content-md-center">
           <Col xs={6} md={4}>
             <Image
-              src={`http://localhost:8000/${petInfo && petInfo.picture}`}
+              src={`https://pet-project-itc.herokuapp.com/${
+                petInfo && petInfo.picture
+              }`}
               thumbnail
             />
           </Col>

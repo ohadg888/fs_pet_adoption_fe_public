@@ -13,9 +13,12 @@ function SearchPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch("http://localhost:8000/api/pet", {
-        method: "GET",
-      });
+      const result = await fetch(
+        "https://pet-project-itc.herokuapp.com/api/pet",
+        {
+          method: "GET",
+        }
+      );
       const body = await result.json();
       setPetsList(body.result);
     };

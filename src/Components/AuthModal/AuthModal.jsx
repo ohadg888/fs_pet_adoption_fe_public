@@ -15,22 +15,28 @@ function AuthModal(props) {
     let result, body;
     try {
       if (isLogin) {
-        result = await fetch("http://localhost:8000/api/login", {
-          method: "POST",
-          body: JSON.stringify({ loginFormData: loginFormData }),
-          headers: { "Content-Type": "application/json" },
-        });
+        result = await fetch(
+          "https://pet-project-itc.herokuapp.com/api/login",
+          {
+            method: "POST",
+            body: JSON.stringify({ loginFormData: loginFormData }),
+            headers: { "Content-Type": "application/json" },
+          }
+        );
         body = await result.json();
         if (body.loggedIn) {
           setUserToken(body.accessToken);
           setShowModal(false);
         }
       } else {
-        result = await fetch("http://localhost:8000/api/signup", {
-          method: "POST",
-          body: JSON.stringify({ signupFormData: signupFormData }),
-          headers: { "Content-Type": "application/json" },
-        });
+        result = await fetch(
+          "https://pet-project-itc.herokuapp.com/api/signup",
+          {
+            method: "POST",
+            body: JSON.stringify({ signupFormData: signupFormData }),
+            headers: { "Content-Type": "application/json" },
+          }
+        );
         body = await result.json();
       }
     } catch (error) {

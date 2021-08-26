@@ -14,7 +14,7 @@ function MyPets() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetch(
-        `http://localhost:8000/api/pet/user/${userInfo._id}`,
+        `https://pet-project-itc.herokuapp.com/api/pet/user/${userInfo._id}`,
         {
           method: "GET",
         }

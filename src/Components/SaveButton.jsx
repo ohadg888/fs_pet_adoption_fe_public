@@ -16,7 +16,7 @@ function SaveButton(props) {
   const handleSaveToggle = () => {
     const fetchData = async () => {
       const result = await fetch(
-        `http://localhost:8000/api/pet/${petID}/save`,
+        `https://pet-project-itc.herokuapp.com/api/pet/${petID}/save`,
         {
           method: savedPet ? "DELETE" : "POST",
           headers: {

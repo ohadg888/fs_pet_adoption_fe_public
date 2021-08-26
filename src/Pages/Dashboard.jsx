@@ -29,9 +29,12 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchPets = async () => {
-      const result = await fetch("http://localhost:8000/api/pet", {
-        method: "GET",
-      });
+      const result = await fetch(
+        "https://pet-project-itc.herokuapp.com/api/pet",
+        {
+          method: "GET",
+        }
+      );
       const body = await result.json();
       console.log(body.result);
       setPetsList(body.result);
@@ -39,12 +42,15 @@ function Dashboard() {
 
     fetchPets();
     const fetchData = async () => {
-      const result = await fetch("http://localhost:8000/api/user", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
+      const result = await fetch(
+        "https://pet-project-itc.herokuapp.com/api/user",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
       const body = await result.json();
       setUsersList(body.result);
     };
